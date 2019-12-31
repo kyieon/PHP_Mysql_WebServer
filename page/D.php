@@ -27,10 +27,10 @@
 		<input type="text" id="chat_input"/><button  id = "button1" name="button" value='1' onclick="button_click1();">입금</button>
 		<div id="chat_output"></div>
 		<script type="text/javascript">
+			//WebSocket 접속
 			var websocket_server = new WebSocket("ws://52.231.25.115:8080/");
 			jQuery(function($){
-				// Websocket
-			
+				//WebSocket이 열렸을 때
 				websocket_server.onopen = function(e) {
 					console.log("Connection established!");
 
@@ -41,9 +41,12 @@
 						})
 					);
 				};
+				//Error처리
 				websocket_server.onerror = function(e) {
 					// Errorhandling
 				}
+
+				//WebSocket Message처리 부분
 				websocket_server.onmessage = function(e)
 				{
 					var json = JSON.parse(e.data);
@@ -55,7 +58,9 @@
 				}
 			
 			});
+			
 
+			//Websocket request Event 
 			function button_click(){
 				websocket_server.send(
 							JSON.stringify({
@@ -66,7 +71,9 @@
 							})
 						);
 			}
+			
 
+			//Websocket request Event 
 			function button_click1(){
 					var chat_msg = $('#chat_input').val();
 				websocket_server.send(

@@ -16,7 +16,7 @@ class MessageHandler implements MessageComponentInterface {
 	private function generateKey($user_id, $resource_id) {
 		return $user_id . $this->sep . $resource_id;
 	}
-
+	
 	private function getUserId($key) {
 		return explode($this->sep, $key)[0];
 	}
@@ -56,10 +56,11 @@ class MessageHandler implements MessageComponentInterface {
 		$user_id = $data->user_id;
 
 		$msg = '';
-
+		
+		//클라이언트 보내 업무 처리
 		switch ($data->type) {
 			case 'init':
-				// add connection info
+				// 클라이언트가 접속시 아이디 및 resource_id 로 키생성하여 conn 정보 
 				$resource_id = $from->resourceId;
 				$this->users[$this->generateKey($user_id, $resource_id)] = $from;
 				break;
@@ -151,7 +152,9 @@ class MessageHandler implements MessageComponentInterface {
 		}
 		return $tmp;
 	}
+	
 
+	//웹소켓 에러발생시호출
 	public function onError(ConnectionInterface $conn, \Exception $e) {
         echo "An error has occurred: {$e->getMessage()}\n";
 		$conn->close();

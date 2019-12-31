@@ -11,6 +11,7 @@ require_once '../vendor/autoload.php';
 
 echo "Server Start ... \n";
 
+//웹서버 구동 8080 포트로 시작
 $ws = new WsServer(new MessageHandler());
 $server = IoServer::factory(
 	new HttpServer($ws),
